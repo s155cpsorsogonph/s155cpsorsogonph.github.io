@@ -5,11 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Maintenance Page</title>
   <script src="https://cdn.tailwindcss.com"></script>
+<script>
+  // Animate progress bar and number on load
+  window.addEventListener('DOMContentLoaded', () => {
+    const bar = document.getElementById('progress-bar');
+    const targetPercent = 40;
+    let currentPercent = 0;
+    const duration = 2000; // ms
+    const stepTime = 20;
+    const steps = duration / stepTime;
+    const increment = targetPercent / steps;
+
+    const updateProgress = () => {
+      currentPercent += increment;
+      if (currentPercent >= targetPercent) {
+        currentPercent = targetPercent;
+        clearInterval(progressInterval);
+      }
+      bar.style.width = `${currentPercent.toFixed(1)}%`;
+      bar.textContent = `${Math.round(currentPercent)}%`;
+    };
+
+    const progressInterval = setInterval(updateProgress, stepTime);
+  });
+</script>
 </head>
 <body class="bg-gradient-to-br from-pink-100 via-indigo-100 to-cyan-100 flex items-center justify-center min-h-screen">
   <div class="text-center p-8 max-w-lg shadow-lg bg-white rounded-2xl border border-blue-100">
     <!-- Logo -->
-    <img src="sorci.png" alt="S155CP Logo" class="w-16 sm:w-20 md:w-24 h-auto mx-auto mb-4 rounded-full shadow-md mx-auto w-24 h-24 mb-4 rounded-full shadow-md">
+    <img src="sorci.png" alt="S155CP Logo" class="w-16 sm:w-20 md:w-24 h-auto mx-auto mb-4 rounded-full shadow-md">
 
     <!-- Message -->
     <h1 class="text-3xl font-extrabold text-gray-800 mb-4">S155CP Sorsogon Chapter</h1>
@@ -17,12 +41,26 @@
 
     <!-- Progress Bar -->
     <div class="w-full bg-gray-200 rounded-full h-6 overflow-hidden mb-4 shadow-inner">
-      <div id="progress-bar" class="bg-blue-600 h-full text-white text-sm flex items-center justify-center font-medium" style="width: 30%">30%</div>
+      <div id="progress-bar" class="bg-blue-600 h-full text-white text-base flex items-center justify-center font-medium transition-all duration-1000 ease-out transition-all duration-[2000ms] ease-in-out" style="width: 0%">40%</div>
     </div>
 
     <!-- Date Info -->
-    <p class="text-sm text-gray-500 bold"><b>as of 05/06/2025</b></p><br>
-    <p class="text-sm text-gray-500 italic">One throttle, one heart, one unstoppable crew.</p>
+    <p class="text-sm text-gray-500 font-bold"><b>as of 05/06/2025</b></p><br>
+    <p class="text-sm text-gray-500 italic">"One throttle, one heart, one unstoppable crew."</p>
   </div>
+
+
+
+
+<!-- 
+  To manually update the progress percentage:
+  1. Change the width in JavaScript (below):
+     bar.style.width = '30%';  <-- change 30% to your new value
+
+  2. Update the visible text inside the progress bar:
+     <div id="progress-bar" ...>30%</div>  <-- change 30% to match
+
+  This keeps both the animation and text in sync.
+-->
 </body>
 </html>
